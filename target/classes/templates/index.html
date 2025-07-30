@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kütüphane Yönetim Sistemi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-book-open me-2"></i>
+                Kütüphane Yönetim Sistemi
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/books">Kitaplar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/students">Öğrenciler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/borrow">Ödünç Al</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/return">İade Et</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/overdue">Gecikmiş</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/statistics">İstatistikler</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Welcome Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="jumbotron bg-light p-4 rounded">
+                    <h1 class="display-4">Hoş Geldiniz!</h1>
+                    <p class="lead">Kütüphane yönetim sistemine hoş geldiniz. Aşağıdaki menülerden istediğiniz işlemi seçebilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center border-primary">
+                    <div class="card-body">
+                        <i class="fas fa-book fa-2x text-primary mb-2"></i>
+                        <h5 class="card-title">Toplam Kitap</h5>
+                        <h2 class="text-primary" th:text="${stats.totalBooks}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                        <h5 class="card-title">Mevcut Kitap</h5>
+                        <h2 class="text-success" th:text="${stats.availableBooks}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-info">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-2x text-info mb-2"></i>
+                        <h5 class="card-title">Toplam Öğrenci</h5>
+                        <h2 class="text-info" th:text="${stats.totalStudents}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-warning">
+                    <div class="card-body">
+                        <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                        <h5 class="card-title">Aktif Ödünç</h5>
+                        <h2 class="text-warning" th:text="${stats.activeBorrows}">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3>Hızlı İşlemler</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-plus-circle fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Kitap Ekle</h5>
+                        <p class="card-text">Yeni kitap eklemek için tıklayın.</p>
+                        <a href="/books/add" class="btn btn-primary w-100">Kitap Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Öğrenci Ekle</h5>
+                        <p class="card-text">Yeni öğrenci kaydı için tıklayın.</p>
+                        <a href="/students/add" class="btn btn-success w-100">Öğrenci Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-hand-holding-usd fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title">Kitap Ödünç Al</h5>
+                        <p class="card-text">Kitap ödünç alma işlemi için tıklayın.</p>
+                        <a href="/borrow" class="btn btn-warning w-100">Ödünç Al</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-undo fa-3x text-info mb-3"></i>
+                        <h5 class="card-title">Kitap İade Et</h5>
+                        <p class="card-text">Kitap iade işlemi için tıklayın.</p>
+                        <a href="/return" class="btn btn-info w-100">İade Et</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Actions -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-list me-2"></i>Kitap Yönetimi</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="/books" class="btn btn-outline-primary">Tüm Kitapları Görüntüle</a>
+                            <a href="/books/search?type=title&query=" class="btn btn-outline-secondary">Kitap Ara</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Raporlar</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="/overdue" class="btn btn-outline-danger">Gecikmiş Kitaplar</a>
+                            <a href="/statistics" class="btn btn-outline-info">Detaylı İstatistikler</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-5 text-center text-muted">
+            <hr>
+            <p>&copy; 2025 Kütüphane Yönetim Sistemi | Tüm hakları saklıdır.</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitap Ödünç Alma</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Kitap Ödünç Alma</h2>
+        
+        <!-- Başarı/Hata Mesajları -->
+        <div th:if="${message}" th:class="${success ? 'alert alert-success' : 'alert alert-danger'}" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+        
+        <form th:action="@{/borrow}" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="studentId" class="form-label">Öğrenci Seçin</label>
+                        <select name="studentId" id="studentId" class="form-select" required>
+                            <option value="">Öğrenci seçin...</option>
+                            <option th:each="student : ${students}" 
+                                    th:value="${student.studentId}" 
+                                    th:text="${student.studentId + ' - ' + student.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="bookIsbn" class="form-label">Kitap Seçin</label>
+                        <select name="bookIsbn" id="bookIsbn" class="form-select" required>
+                            <option value="">Kitap seçin...</option>
+                            <option th:each="book : ${books}" 
+                                    th:value="${book.isbn}" 
+                                    th:text="${book.isbn + ' - ' + book.title + ' (' + book.availableCopies + ' kopya)'}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Kitap Ödünç Al</button>
+        </form>
+        
+        <hr>
+        
+        <h3>Mevcut Kitaplar</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Başlık</th>
+                    <th>Yazar</th>
+                    <th>Mevcut Kopya</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.isbn}"></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.availableCopies}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
