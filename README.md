@@ -52,7 +52,7 @@ Before running this application, make sure you have the following installed:
    - **Port**: 5432
    - **Database**: kutuphane
    - **Username**: postgres
-   - **Password**: 241308
+   - **Password**: *******
 
 ### Database Schema
 
